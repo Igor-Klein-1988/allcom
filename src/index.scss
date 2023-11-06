@@ -41,8 +41,8 @@
 @import './components/NotFound/NotFound.module.scss';
 
 // @import "elements/header";
-// @import "elements/slider";
-// @import "elements/product";
+@import "./assets/scss/elements/slider";
+@import "./assets/scss/elements/Products.module.scss";
 // @import "elements/banner";
 // @import "elements/blog";
 // @import "elements/testimonial";
