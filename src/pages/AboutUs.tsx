@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { MapContainer as LeafletMapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './AboutUs.css';
 
-const AboutUs: React.FC = () => {
+const AboutUs: React.FC = (): JSX.Element => {
 	const companyLocation: LatLngExpression = [52.462894, 13.508654];
 
 	return (
