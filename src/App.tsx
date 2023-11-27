@@ -9,6 +9,7 @@ import Shipping from './components/Shipping/Shipping';
 import Payment from './components/Payment/Payment';
 import Return from './components/Return/Return';
 import Support from './components/Support/Support';
+import AboutUs from './pages/AboutUs';
 
 function App(): JSX.Element {
 	return (
@@ -22,6 +23,7 @@ function App(): JSX.Element {
 					<Route path="payment" element={<Payment />} />
 					<Route path="return" element={<Return />} />
 					<Route path="support" element={<Support />} />
+					<Route path="*" element={<AboutUs />} />
 					<Route path="*" element={<NotFound />} />
 				</Route>
 			</Routes>
