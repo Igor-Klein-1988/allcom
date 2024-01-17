@@ -13,6 +13,7 @@ import ChangePassword from './features/MyAccount/components/ChangePassword';
 import ProductList from './features/user/wishProducts/ProductList';
 import MyAuctions from './features/MyAccount/components/MyAuctions/MyAuctions';
 import HomePage from './features/HomePage/HomePage';
+import AboutUs from './features/AboutUs/AboutUs';
 
 function App(): JSX.Element {
 	return (
@@ -33,6 +34,7 @@ function App(): JSX.Element {
 					<Route path="return" element={<Return />} />
 					<Route path="support" element={<Support />} />
 					<Route path="*" element={<NotFound />} />
+					<Route path="about_us" element={<AboutUs />} />
 				</Route>
 			</Routes>
 		</>
