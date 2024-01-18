@@ -20,7 +20,7 @@ const AboutUs: React.FC = (): JSX.Element => {
 				<p>{t('about_us2')}</p>
 				<p>{t('about_us3')}</p>
 				<div className="about-us-map-container">
-					<div className="leaflet-map-container">
+					<div className="about-us-leaflet-map-container">
 						<LeafletMapContainer
 							center={ABOUT_US_COORDINATES}
 							zoom={13}
