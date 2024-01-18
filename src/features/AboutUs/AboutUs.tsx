@@ -4,9 +4,10 @@ import { LatLngExpression } from 'leaflet';
 import { useTranslation } from 'react-i18next';
 import 'leaflet/dist/leaflet.css';
 
+const ABOUT_US_COORDINATES: LatLngExpression = [52.462894, 13.508654];
+
 const AboutUs: React.FC = (): JSX.Element => {
 	const { t } = useTranslation('about_us');
-	const companyLocation: LatLngExpression = [52.462894, 13.508654];
 
 	return (
 		<div className="about-us-container">
@@ -18,23 +19,21 @@ const AboutUs: React.FC = (): JSX.Element => {
 				<p>{t('about_us1')}</p>
 				<p>{t('about_us2')}</p>
 				<p>{t('about_us3')}</p>
-				<div className="map-container">
-					<div className="map-wrapper">
-						<div className="leaflet-map-container">
-							<LeafletMapContainer
-								center={companyLocation}
-								zoom={13}
-								style={{ height: '300px', width: '100%' }}
-							>
-								<TileLayer
-									url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-									attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-								/>
-								<Marker position={companyLocation}>
-									<Popup>Allcom</Popup>
-								</Marker>
-							</LeafletMapContainer>
-						</div>
+				<div className="about-us-map-container">
+					<div className="leaflet-map-container">
+						<LeafletMapContainer
+							center={ABOUT_US_COORDINATES}
+							zoom={13}
+							style={{ height: '300px', width: '100%' }}
+						>
+							<TileLayer
+								url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+								attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+							/>
+							<Marker position={ABOUT_US_COORDINATES}>
+								<Popup>Allcom</Popup>
+							</Marker>
+						</LeafletMapContainer>
 					</div>
 				</div>
 			</div>

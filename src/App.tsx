@@ -33,8 +33,8 @@ function App(): JSX.Element {
 					<Route path="payment" element={<Payment />} />
 					<Route path="return" element={<Return />} />
 					<Route path="support" element={<Support />} />
-					<Route path="*" element={<NotFound />} />
 					<Route path="about_us" element={<AboutUs />} />
+					<Route path="*" element={<NotFound />} />
 				</Route>
 			</Routes>
 		</>
