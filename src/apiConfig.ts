@@ -6,6 +6,7 @@ export default {
 	updateProductEndpoint: `/api/products/update`,
 	getAllProductEndpoint: `/api/products/search`,
 	getProductByIdEndpoint: `/api/products/`,
+	getProductsOnePerCategoryEndpoint: `/api/products/one-per-category`,
 	authCheckEndpoint: `/api/auth/check`,
 	loginEndpoint: `/api/auth/login`,
 	registerEndpoint: `/api/auth/register`,
