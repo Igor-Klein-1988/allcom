@@ -13,6 +13,7 @@ export default {
 	restoreEndpoint: `/api/auth/restore`,
 	restoreNewPasswordEndpoint: `/api/auth/restoreNewPassword`,
 	getUserProfileEndpoint: `/api/users/getUserProfile`,
+	getUserByIdEndpoint: `/api/users/foundUserById/`,
 	getAllUsersEndpoint: `/api/users/getAll`,
 	getAllCategoriesEndpoint: `/api/categories/all`,
 	getAllCategoriesByParentEndpoint: `/api/categories/allByParent/`,
