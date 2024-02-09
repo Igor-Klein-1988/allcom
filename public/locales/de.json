@@ -142,10 +142,10 @@
 		"first_name": "Vorname",
 		"last_name": "Nachname",
 		"phone": "Telefonnummer",
-		"user_name": "Nutzername",
 		"email": "Email",
-		"about_me": "Über mich",
 		"address": "Adresse",
+		"user_name": "Nutzername",
+		"about_me": "Über mich",
 		"date_of_birth": "Geburtsdatum"
 	},
 	"change_password": {
@@ -253,7 +253,20 @@
 		"text_activate": "Nutzer entblockieren",
 		"activate": "Activieren",
 		"block": "Block",
-		"search_placeholder": "geben Sie den Nachnamen oder Vornamen ein..."
+		"search_placeholder": "geben Sie den Nachnamen oder Vornamen ein...",
+		"change": "Ändern",
+		"change_placeholder": "benutzerdaten ändern"
+	},
+	"edit_user": {
+		"first_name": "Vorname",
+		"last_name": "Nachname",
+		"phone": "Telefonnummer",
+		"email": "Email",
+		"address": "Adresse",
+		"street": "Straße",
+		"house_number": "Hausnummer",
+		"city": "Stadt",
+		"post_index": "Postleitzahl"
 	},
 	"confirmation_modal": {
 		"yes": "Bestätigen",

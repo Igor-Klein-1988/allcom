@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as api from './api';
 import UserState from './types/UserState';
+import { UserFormValues } from './types/UserFormValues';
 
 interface LoadUsersParams {
 	limit?: number;
@@ -12,17 +13,46 @@ interface StatusUserParams {
 	status: boolean;
 }
 
+interface UpdateUserParams {
+	user_id: number;
+	data: UserFormValues;
+}
+
 const initialState: UserState = {
-	user: undefined,
+	user: {
+		id: -1,
+		firstName: '',
+		lastName: '',
+		email: '',
+		phoneNumber: '',
+		companyName: '',
+		position: '',
+		taxNumber: '',
+		role: '',
+		address: {
+			postIndex: '',
+			city: '',
+			street: '',
+			houseNumber: '',
+		},
+		checked: false,
+		blocked: false,
+		error: '',
+	},
 	users: [],
+	loading: false,
+	loadingUpdateUserById: false,
 	loadingAllUsers: false,
 	totalPages: 0,
 	number: 0,
-	loading: false,
 	error: '',
 };
 
 export const loadUser = createAsyncThunk('user/loadUser', () => api.getUserProfile());
+
+export const loadUserById = createAsyncThunk('user/loadUserById', (user_id: number) =>
+	api.getUserById(user_id)
+);
 
 export const loadAllUsers = createAsyncThunk(
 	'user/loadAllUsers',
@@ -39,14 +69,27 @@ export const changeBlockedStatus = createAsyncThunk(
 	({ user_id, status }: StatusUserParams) => api.changeCheckedStatus(user_id, status)
 );
 
+export const updateUserById = createAsyncThunk(
+	'user/updateUser',
+	({ user_id, data }: UpdateUserParams) => api.updateUser(user_id, data)
+);
+
 export const getFoundUser = createAsyncThunk('user/foundUser', (name: string) =>
 	api.searchUser(name)
 );
 
 export const userSlice = createSlice({
-	name: 'userDate',
+	name: 'userData',
 	initialState,
-	reducers: {},
+	reducers: {
+		findUserById: (state, action) => {
+			const userId = action.payload;
+			const userFound = state.users.find((user) => user.id === userId);
+			if (userFound) {
+				state.user = userFound;
+			}
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(loadUser.pending, (state) => {
@@ -60,6 +103,7 @@ export const userSlice = createSlice({
 				state.loading = false;
 				state.error = action.error.message;
 			})
+
 			.addCase(loadAllUsers.pending, (state) => {
 				state.loadingAllUsers = true;
 			})
@@ -105,6 +149,26 @@ export const userSlice = createSlice({
 				state.error = action.error.message;
 			})
 
+			.addCase(updateUserById.pending, (state) => {
+				state.loadingUpdateUserById = true;
+			})
+			.addCase(updateUserById.fulfilled, (state, action) => {
+				if (action.payload.error) {
+					state.error = action.payload.error || 'Unknown error occurred';
+				} else {
+					const userId = action.payload.id;
+					const userFound = state.users.find((user) => user.id === userId);
+					if (userFound) {
+						state.users[userId] = userFound;
+					}
+					state.loadingUpdateUserById = false;
+				}
+			})
+			.addCase(updateUserById.rejected, (state, action) => {
+				state.loadingUpdateUserById = false;
+				state.error = action.error.message;
+			})
+
 			.addCase(getFoundUser.fulfilled, (state, action) => {
 				state.users = action.payload.users;
 			})
@@ -114,4 +178,5 @@ export const userSlice = createSlice({
 	},
 });
 
+export const { findUserById } = userSlice.actions;
 export default userSlice.reducer;
