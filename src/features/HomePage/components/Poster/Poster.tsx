@@ -2,22 +2,23 @@ import { FC, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, EffectCreative, Navigation, Pagination } from 'swiper/modules';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
+import { NavLink } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import Timer from '../../../../components/Timer/Timer';
 import Spinner from '../../../../components/Spinner/Spinner';
-
+import { loadProductsOnePerCategory } from '../../../products/productsSlice';
 import 'swiper/css/pagination';
 import {
 	selectProductsOnePerCategory,
 	selectLoadingProductsOnePerCategory,
 } from '../../../products/selectors';
-import { loadProductsOnePerCategory } from '../../../products/productsSlice';
-import moment from 'moment';
 
 const AUTOPLAY_DELAY = 2000;
 const SPACE_BETWEEN_SLIDES = 50;
 const SLIDES_PER_VIEW = 1;
+const AUCTION_TIME_EXPIRED = 0;
 
 const Poster: FC = (): JSX.Element => {
 	const { t } = useTranslation('poster');
@@ -25,6 +26,15 @@ const Poster: FC = (): JSX.Element => {
 	const products = useAppSelector(selectProductsOnePerCategory);
 	const loadProducts = useAppSelector(selectLoadingProductsOnePerCategory);
 	const dispatch = useAppDispatch();
+
+	const getCalculateAuctionTimer = (currentPlannedEndAt: string): number => {
+		const currentPlannedEnd = moment(currentPlannedEndAt);
+		return currentPlannedEnd.diff(moment(), 'seconds');
+	};
+
+	const getCurrentStartDate = (startAt: string): string => {
+		return moment(startAt).format('YYYY-MM-DD HH:mm:ss');
+	};
 
 	useEffect(() => {
 		dispatch(loadProductsOnePerCategory());
@@ -57,7 +67,7 @@ const Poster: FC = (): JSX.Element => {
 							id,
 							imageLinks,
 							name,
-							lastCreatedAuction: { currentPlannedEndAt, lastBetAmount },
+							lastCreatedAuction: { currentPlannedEndAt, lastBetAmount, startAt },
 						}) => (
 							<SwiperSlide key={id} className="poster_col">
 								{imageLinks.length != 0 && (
@@ -69,9 +79,24 @@ const Poster: FC = (): JSX.Element => {
 									<h1 className="poster_col__info--title">{name}</h1>
 									<div className="poster_col__info--priceAndTimer">
 										<span className="poster_col__info--price">{lastBetAmount} &euro;</span>
-										{/* <Timer time={currentPlannedEndAt} /> */}
 									</div>
-									<button className="poster_col__info--btn">{t('bet_now')}</button>
+									{getCalculateAuctionTimer(currentPlannedEndAt) > AUCTION_TIME_EXPIRED ? (
+										<div className="poster__timer">
+											<Timer
+												time={getCalculateAuctionTimer(currentPlannedEndAt)}
+												font_size="2.2rem"
+												wigth="260px"
+											/>
+										</div>
+									) : (
+										<div className="d-flex">
+											<span className="poster__start_at">{t('start_at')}:</span>
+											<span className="poster__start_at--date">{getCurrentStartDate(startAt)}</span>
+										</div>
+									)}
+									<NavLink className="poster_col__info--btn" to={`products/details/${id}`}>
+										{t('view_product')}
+									</NavLink>
 								</div>
 							</SwiperSlide>
 						)

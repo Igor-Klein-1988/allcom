@@ -18,7 +18,8 @@
 		"add_to_wishlist": "Add to wishlist"
 	},
 	"poster": {
-		"bet_now": "BET NOW"
+		"view_product": "VIEW PRODUCT",
+		"start_at": "Start At"
 	},
 	"products": {
 		"add_to_cart": "add to cart",

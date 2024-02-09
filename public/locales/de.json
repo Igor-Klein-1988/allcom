@@ -18,7 +18,8 @@
 		"add_to_wishlist": "Auf den Merkzettel"
 	},
 	"poster": {
-		"bet_now": "JETZT BIETEN"
+		"view_product": "PRODUKT ANZEIGEN",
+		"start_at": "Anfangen bei"
 	},
 	"products": {
 		"add_to_cart": "in den Warenkorb",

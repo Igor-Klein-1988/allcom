@@ -18,7 +18,8 @@
 		"add_to_wishlist": "В избранное"
 	},
 	"poster": {
-		"bet_now": "СДЕЛАТЬ СТАВКУ"
+		"view_product": "ПОСМОТРЕТЬ ТОВАР",
+		"start_at": "Начало с"
 	},
 	"products": {
 		"add_to_cart": "добавить в корзину",
