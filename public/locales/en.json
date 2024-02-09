@@ -265,6 +265,7 @@
 		"street": "Street",
 		"house_number": "House number",
 		"city": "Sity",
+		"save": "Save",
 		"post_index": "Post index"
 	},
 	"confirmation_modal": {

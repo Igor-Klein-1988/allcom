@@ -2,7 +2,6 @@ export interface UserFormValues {
 	firstName: string;
 	lastName: string;
 	email: string;
-	password: string;
 	phoneNumber: string;
 	companyName: string;
 	position: string;

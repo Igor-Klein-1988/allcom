@@ -39,6 +39,7 @@ export async function changeCheckedStatus(user_id: number, status: boolean): Pro
 	const res = await fetch(
 		`${apiConfig.changeUserCheckedStatusEndpoint}${user_id}?isChecked=${String(status)}`,
 		{
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -51,6 +52,7 @@ export async function changeBlockedStatus(user_id: number, status: boolean): Pro
 	const res = await fetch(
 		`${apiConfig.changeUserBlockedStatusEndpoint}${user_id}?isBlocked=${String(status)}`,
 		{
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -69,25 +71,12 @@ export async function searchUser(email: string): Promise<UsersResponse> {
 }
 
 export async function updateUser(user_id: number, data: UserFormValues): Promise<UserDto> {
-	const formData = new FormData();
-	formData.append('firstName', data.firstName);
-	formData.append('lastName', data.lastName);
-	formData.append('email', data.email);
-	formData.append('phoneNumber', data.phoneNumber);
-	formData.append('companyName', data.companyName);
-	formData.append('position', data.position);
-	formData.append('taxNumber', data.taxNumber);
-	formData.append('address.postIndex', data.address.postIndex);
-	formData.append('address.city', data.address.city);
-	formData.append('address.street', data.address.street);
-	formData.append('address.houseNumber', data.address.houseNumber);
-
 	const res = await fetch(`${apiConfig.updateUserEndpoint}${user_id}`, {
 		method: 'PUT',
 		headers: {
-			Accept: 'application/json',
+			'Content-Type': 'application/json',
 		},
-		body: formData,
+		body: JSON.stringify(data),
 	});
 
 	if (res.status >= 400) {

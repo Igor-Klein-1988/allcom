@@ -268,6 +268,7 @@
 		"street": "Улица",
 		"house_number": "Номер дома",
 		"city": "Город",
+		"save": "Сохранить",
 		"post_index": "Почтовый индекс"
 	},
 	"confirmation_modal": {
