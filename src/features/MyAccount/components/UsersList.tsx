@@ -176,7 +176,7 @@ const UsersList: FC = (): JSX.Element => {
 			<ConfirmationModal
 				confirmationModalActive={confirmationModalActive}
 				setConfirmationModal={setConfirmationModal}
-				text={t(`${userData.status ? 'text_activate' : 'text_block'}`)}
+				text={t(`${userData.status ? 'text_block' : 'text_activate'}`)}
 				onConfirm={onConfirm}
 				value={userData.user_name}
 			/>

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'react-bootstrap';
 
@@ -25,24 +25,10 @@ const EditUser: FC<EditUserProps> = ({
 	const loading = useAppSelector(selectLoadUser);
 	const userData = useAppSelector(selectUser);
 
-	const [formData, setFormData] = useState<UserFormValues>({
-		firstName: userData.firstName,
-		lastName: userData.lastName,
-		email: userData.email,
-		password: '',
-		phoneNumber: userData.phoneNumber,
-		companyName: userData.companyName,
-		position: userData.position,
-		taxNumber: userData.taxNumber,
-		address: {
-			street: userData.address.street,
-			houseNumber: userData.address.houseNumber,
-			city: userData.address.city,
-			postIndex: userData.address.postIndex,
-		},
-		checked: userData.checked,
-		blocked: userData.blocked,
-	});
+	const [formData, setFormData] = useState<UserFormValues>(userData);
+	useEffect(() => {
+		setFormData(userData);
+	}, [userData]);
 
 	const handleChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
 		e.preventDefault();
@@ -201,7 +187,7 @@ const EditUser: FC<EditUserProps> = ({
 								</Form.Group>
 							</div>
 							<button type="submit" onClick={(e) => handleChange(e)}>
-								отпрваить
+								{t('save')}
 							</button>
 						</Form>
 					</div>

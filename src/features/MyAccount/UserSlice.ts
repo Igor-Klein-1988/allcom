@@ -66,7 +66,7 @@ export const changeCheckedStatus = createAsyncThunk(
 
 export const changeBlockedStatus = createAsyncThunk(
 	'user/changeBlockedStatus',
-	({ user_id, status }: StatusUserParams) => api.changeCheckedStatus(user_id, status)
+	({ user_id, status }: StatusUserParams) => api.changeBlockedStatus(user_id, status)
 );
 
 export const updateUserById = createAsyncThunk(
@@ -121,6 +121,7 @@ export const userSlice = createSlice({
 			.addCase(changeCheckedStatus.fulfilled, (state, action) => {
 				const { id, checked } = action.payload;
 				const userIndex = state.users.findIndex((user) => user.id === id);
+				state.loadingAllUsers = false;
 
 				if (userIndex !== -1) {
 					const updatedUser = { ...state.users[userIndex], checked };
@@ -132,11 +133,16 @@ export const userSlice = createSlice({
 			})
 			.addCase(changeCheckedStatus.rejected, (state, action) => {
 				state.error = action.error.message;
+				state.loadingAllUsers = false;
+			})
+			.addCase(changeCheckedStatus.pending, (state) => {
+				state.loadingAllUsers = true;
 			})
 
 			.addCase(changeBlockedStatus.fulfilled, (state, action) => {
 				const { id, blocked } = action.payload;
 				const userIndex = state.users.findIndex((user) => user.id === id);
+				state.loadingAllUsers = false;
 
 				if (userIndex !== -1) {
 					const updatedUser = { ...state.users[userIndex], blocked };
@@ -147,6 +153,10 @@ export const userSlice = createSlice({
 			})
 			.addCase(changeBlockedStatus.rejected, (state, action) => {
 				state.error = action.error.message;
+				state.loadingAllUsers = false;
+			})
+			.addCase(changeBlockedStatus.pending, (state) => {
+				state.loadingAllUsers = true;
 			})
 
 			.addCase(updateUserById.pending, (state) => {
@@ -156,11 +166,9 @@ export const userSlice = createSlice({
 				if (action.payload.error) {
 					state.error = action.payload.error || 'Unknown error occurred';
 				} else {
-					const userId = action.payload.id;
-					const userFound = state.users.find((user) => user.id === userId);
-					if (userFound) {
-						state.users[userId] = userFound;
-					}
+					const user = action.payload;
+					state.users = state.users.map((u) => (u.id === user.id ? user : u));
+
 					state.loadingUpdateUserById = false;
 				}
 			})
